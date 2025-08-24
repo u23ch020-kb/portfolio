@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+Push the updated `index.html` with the right-side mobile menu and overlay, using the commit message:
+**"Update mobile menu to slide in from right with overlay"**.
+
+```githubwrite
+query: "Update the file called index.html with the sha  in the repository u23ch020-kb/portfolio with the content <!DOCTYPE html>
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
   <title>Kaushal Bhagat's Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap\" rel=\"stylesheet\">
+  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">
 
   <style>
     :root {
@@ -63,12 +67,22 @@
       color: #fff;
     }
 
-    /* Mobile menu */
+    /* Right-side mobile menu */
     .mobile-menu {
-      display: none;
-      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 76vw;
+      max-width: 320px;
+      height: 100vh;
       background: var(--card-bg);
-      padding: 10px;
+      padding: 30px 20px 20px 20px;
+      box-shadow: -2px 0 12px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      z-index: 999;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(.55,0,.1,1);
     }
     .mobile-menu a {
       padding: 10px;
@@ -78,14 +92,32 @@
       color: #ccc;
     }
     .mobile-menu a:hover { background: var(--primary-color); color: #fff; }
+    .mobile-menu.show { transform: translateX(0); }
 
-    /* Show mobile nav */
-    .mobile-menu.show { display: flex; }
+    /* Overlay for backdrop */
+    .menu-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.35);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 998;
+      transition: opacity 0.3s;
+    }
+    .menu-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-    /* Responsive rules */
+    /* Only show on mobile */
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hamburger { display: block; }
+      .mobile-menu { display: flex; }
+      .menu-overlay { display: block; }
+    }
+    @media (min-width: 769px) {
+      .mobile-menu, .menu-overlay { display: none!important; }
     }
 
     /* === SECTIONS === */
@@ -119,59 +151,60 @@
 </head>
 <body>
   <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="logo">KB</div>
-    <nav class="nav-links">
-      <a href="#home" class="active">Home</a>
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#extracurricular">Extracurricular</a>
-      <a href="#achievements">Achievements</a>
-      <a href="#hobbies">Hobbies</a>
-      <a href="#contact">Contact</a>
+  <header class=\"navbar\">
+    <div class=\"logo\">KB</div>
+    <nav class=\"nav-links\">
+      <a href=\"#home\" class=\"active\">Home</a>
+      <a href=\"#about\">About</a>
+      <a href=\"#experience\">Experience</a>
+      <a href=\"#projects\">Projects</a>
+      <a href=\"#skills\">Skills</a>
+      <a href=\"#extracurricular\">Extracurricular</a>
+      <a href=\"#achievements\">Achievements</a>
+      <a href=\"#hobbies\">Hobbies</a>
+      <a href=\"#contact\">Contact</a>
     </nav>
-    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    <div class=\"hamburger\" id=\"hamburger\"><i class=\"fas fa-bars\"></i></div>
   </header>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#experience">Experience</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#extracurricular">Extracurricular</a>
-    <a href="#achievements">Achievements</a>
-    <a href="#hobbies">Hobbies</a>
-    <a href="#contact">Contact</a>
+  <div class=\"mobile-menu\" id=\"mobileMenu\">
+    <a href=\"#home\">Home</a>
+    <a href=\"#about\">About</a>
+    <a href=\"#experience\">Experience</a>
+    <a href=\"#projects\">Projects</a>
+    <a href=\"#skills\">Skills</a>
+    <a href=\"#extracurricular\">Extracurricular</a>
+    <a href=\"#achievements\">Achievements</a>
+    <a href=\"#hobbies\">Hobbies</a>
+    <a href=\"#contact\">Contact</a>
   </div>
+  <div class=\"menu-overlay\" id=\"menuOverlay\"></div>
 
   <!-- MAIN CONTENT -->
   <main>
     <!-- HOME -->
-    <section id="home" class="section">
-      <div class="video-background">
-        <video src="https://assets.coverr.co/videos/mp4/Abstract-Swirls.mp4" autoplay loop muted playsinline></video>
+    <section id=\"home\" class=\"section\">
+      <div class=\"video-background\">
+        <video src=\"https://assets.coverr.co/videos/mp4/Abstract-Swirls.mp4\" autoplay loop muted playsinline></video>
       </div>
-      <div class="home-content">
-        <img src="dp.png" alt="Kaushal Bhagat" class="profile-photo" />
+      <div class=\"home-content\">
+        <img src=\"dp.png\" alt=\"Kaushal Bhagat\" class=\"profile-photo\" />
         <h1>KAUSHAL BHAGAT</h1>
         <p>Chemical Engineering Undergraduate at SVNIT Surat</p>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="section">
+    <section id=\"about\" class=\"section\">
       <h2>About Me</h2>
-      <div class="card">
-        <p>I am a Chemical Engineering undergraduate at SVNIT Surat with strong foundation in biology and chemistry. Skilled in computational simulations, membrane technology, and AI-assisted coding.</p>
+      <div class=\"card\">
+        <p>I am a Chemical Engineering undergraduate at SVNIT Surat with strong foundation in biology and chemistry. Skilled in computational simulations, membrane technology, and AI-assisted coding.<[...]</p>
       </div>
     </section>
 
     <!-- EXPERIENCE -->
-    <section id="experience" class="section">
+    <section id=\"experience\" class=\"section\">
       <h2>Experience</h2>
-      <div class="card">
+      <div class=\"card\">
         <h3>IIT Indore — Protein Phase Behavior</h3>
         <p>Jun 2025 - Jul 2025</p>
         <ul><li>Studied protein phase behavior using LAMMPS & OVITO, RDF, density mapping, and AI-assisted visualization.</li></ul>
@@ -182,20 +215,20 @@
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects" class="section">
+    <section id=\"projects\" class=\"section\">
       <h2>Projects</h2>
-      <div class="card">
-        <ul class="list-unstyled">
-          <li>GitHub Profile — <a href="https://github.com/u23ch020-kb" target="_blank">Link</a></li>
+      <div class=\"card\">
+        <ul class=\"list-unstyled\">
+          <li>GitHub Profile — <a href=\"https://github.com/u23ch020-kb\" target=\"_blank\">Link</a></li>
           <li>Portfolio Website hosted on GitHub Pages</li>
         </ul>
       </div>
     </section>
 
     <!-- SKILLS -->
-    <section id="skills" class="section">
+    <section id=\"skills\" class=\"section\">
       <h2>Technical Skills</h2>
-      <div class="card">
+      <div class=\"card\">
         <ul>
           <li><b>Computational:</b> LAMMPS, OVITO, VMD, LaTeX, Linux</li>
           <li><b>AI-assisted Coding:</b> Python, C, C++</li>
@@ -205,18 +238,18 @@
     </section>
 
     <!-- EXTRACURRICULAR -->
-    <section id="extracurricular" class="section">
+    <section id=\"extracurricular\" class=\"section\">
       <h2>Extracurricular</h2>
-      <div class="card">
+      <div class=\"card\">
         <p>INSPIRE Club — Organizer & Leader</p>
         <p>AIChE CHES SVNIT — PR Executive</p>
       </div>
     </section>
 
     <!-- ACHIEVEMENTS -->
-    <section id="achievements" class="section">
+    <section id=\"achievements\" class=\"section\">
       <h2>Achievements</h2>
-      <div class="card">
+      <div class=\"card\">
         <ul>
           <li>1st Place Journalist — IIT Delhi MUN</li>
           <li>Qualified NEET 2021 with 535/720</li>
@@ -225,9 +258,9 @@
     </section>
 
     <!-- HOBBIES -->
-    <section id="hobbies" class="section">
+    <section id=\"hobbies\" class=\"section\">
       <h2>Hobbies & Interests</h2>
-      <div class="card">
+      <div class=\"card\">
         <ul>
           <li>Playing Cricket</li>
           <li>Watching Documentaries</li>
@@ -238,36 +271,45 @@
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="section">
+    <section id=\"contact\" class=\"section\">
       <h2>Contact Me</h2>
-      <div class="card">
-        <form id="contactForm" action="https://formspree.io/f/movnalze" method="POST">
-          <input type="text" name="name" placeholder="Your Name" required><br><br>
-          <input type="email" name="email" placeholder="Your Email" required><br><br>
-          <textarea name="message" rows="4" placeholder="Your Message" required></textarea><br><br>
-          <button type="submit" class="form-button">Send</button>
+      <div class=\"card\">
+        <form id=\"contactForm\" action=\"https://formspree.io/f/movnalze\" method=\"POST\">
+          <input type=\"text\" name=\"name\" placeholder=\"Your Name\" required><br><br>
+          <input type=\"email\" name=\"email\" placeholder=\"Your Email\" required><br><br>
+          <textarea name=\"message\" rows=\"4\" placeholder=\"Your Message\" required></textarea><br><br>
+          <button type=\"submit\" class=\"form-button\">Send</button>
         </form>
       </div>
     </section>
   </main>
 
   <script>
-    const hamburger = document.getElementById("hamburger");
-    const mobileMenu = document.getElementById("mobileMenu");
-    hamburger.addEventListener("click", () => {
-      mobileMenu.classList.toggle("show");
+    const hamburger = document.getElementById(\"hamburger\");
+    const mobileMenu = document.getElementById(\"mobileMenu\");
+    const menuOverlay = document.getElementById(\"menuOverlay\");
+    hamburger.addEventListener(\"click\", () => {
+      mobileMenu.classList.toggle(\"show\");
+      menuOverlay.classList.toggle(\"show\");
     });
 
-    const navLinks = document.querySelectorAll(".nav-links a, .mobile-menu a");
+    // Clicking overlay closes menu
+    menuOverlay.addEventListener(\"click\", () => {
+      mobileMenu.classList.remove(\"show\");
+      menuOverlay.classList.remove(\"show\");
+    });
+
+    const navLinks = document.querySelectorAll(\".nav-links a, .mobile-menu a\");
     navLinks.forEach(link => {
-      link.addEventListener("click", () => {
-        navLinks.forEach(l => l.classList.remove("active"));
-        link.classList.add("active");
-        mobileMenu.classList.remove("show");
+      link.addEventListener(\"click\", () => {
+        navLinks.forEach(l => l.classList.remove(\"active\"));
+        link.classList.add(\"active\");
+        mobileMenu.classList.remove(\"show\");
+        menuOverlay.classList.remove(\"show\");
       });
     });
   </script>
 </body>
 </html>
-
-
+"
+```
